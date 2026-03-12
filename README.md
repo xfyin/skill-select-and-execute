@@ -1,38 +1,49 @@
 # skill-selector
 
-A meta-skill for AI agents (Cursor, Claude Code, etc.) that **selects the most suitable skill from your installed skills** based on user input, then runs it.
+A meta-skill that **selects the most suitable skill from your installed skills** based on user input, then runs it. One clear match → run it; multiple matches → list top 5 with score, you pick one, then run.
 
-- **One clear match** → Recommends it and runs it.
-- **Multiple matches** → Lists top 5 with score and one-line reason; you pick one, then it runs.
+Works with Cursor, Claude Code, Windsurf, Cline, and [other agents](https://skills.sh/docs/cli#supported-agents). Invoke via **`/skill-selector`** or ask "which skill should I use?"
 
-Invoke via **`/skill-selector`** in Agent chat, or when you ask "which skill should I use?" or "pick the best skill for this task."
+## Install
 
-## Install (skills.sh ecosystem)
-
-```bash
-npx skills add <your-github-username>/<this-repo-name>
-```
-
-Example (after you publish this repo under your GitHub account):
+Use the [skills CLI](https://github.com/vercel-labs/skills) (same as [skills.sh](https://skills.sh)):
 
 ```bash
-npx skills add your-username/skill-select-and-execute
+npx skills add <owner>/skill-select-and-execute
 ```
 
-To install only this skill from a repo that has multiple skills:
+Example (replace with your GitHub username if you forked):
 
 ```bash
-npx skills add https://github.com/your-username/skill-select-and-execute --skill skill-selector
+npx skills add xfyin/skill-select-and-execute
 ```
 
-## Manual install (Cursor)
-
-Copy the skill into Cursor's user skills directory:
+The CLI detects your installed agents and installs to the correct path. Options:
 
 ```bash
-mkdir -p ~/.cursor/skills/skill-selector
-cp skills/skill-selector/SKILL.md ~/.cursor/skills/skill-selector/
+# Install only this skill from a repo
+npx skills add owner/skill-select-and-execute --skill skill-selector
+
+# List skills in the repo (no install)
+npx skills add owner/skill-select-and-execute --list
+
+# Global install for specific agents
+npx skills add owner/skill-select-and-execute -g -a cursor -a claude-code -y
 ```
+
+See [CLI reference](https://skills.sh/docs/cli) for all options and supported agents.
+
+### Manual install
+
+Clone the repo and copy the skill into your agent’s skills directory (paths per agent: [skills.sh docs](https://skills.sh/docs/cli#supported-agents)):
+
+```bash
+git clone https://github.com/<owner>/skill-select-and-execute.git
+cp -r skill-select-and-execute/skills/skill-selector ~/.cursor/skills/   # Cursor example
+```
+
+**Cursor:** The CLI installs to `~/.agents/skills/`. Cursor’s `/` menu reads from `~/.cursor/skills/`. If `skill-selector` doesn’t appear when you type `/`, run:  
+`mkdir -p ~/.cursor/skills/skill-selector && cp ~/.agents/skills/skill-selector/SKILL.md ~/.cursor/skills/skill-selector/`
 
 ## License
 
