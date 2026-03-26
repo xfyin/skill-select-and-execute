@@ -2,7 +2,7 @@
 
 A meta-skill that **selects and runs skills from your installed skills** based on user input. It **breaks the request into requirement points** and may recommend **more than one skill** when the task spans different domains (not limited to a single skill). For a single point, one clear match → run it; multiple close matches → list top 5 with score, you pick one, then run.
 
-If nothing installed fits, it falls back to **discovery** (`find-skill` when available, or **`npx skills find`** + **`npx skills add`**) and re-evaluates. Before execution, it performs a **lightweight security review**; when no issues are found, the agent records that in the repo’s **`AGENTS.md`** (see that file in this repository).
+If nothing installed fits, it falls back to **discovery** (`find-skill` when available, or **`npx skills find`** + **`npx skills add`**) and re-evaluates. Before execution, it performs a **lightweight security review**; do not run skills that fail that review.
 
 Full procedure: [`skills/skill-selector/SKILL.md`](skills/skill-selector/SKILL.md).
 

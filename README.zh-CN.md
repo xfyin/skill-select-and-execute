@@ -2,7 +2,7 @@
 
 一个**根据你的输入从已安装 skills 里选择并执行**的 meta-skill。会先**拆分、归类需求点**；若一件事涉及多个领域，可对应**多个 skill**（不强制只选一个）。对单个需求点：唯一强匹配 → 直接执行；多个接近的候选 → 列出前 5 个并附分数，你选一个后再执行。
 
-若当前已安装的 skill **没有合适匹配**，会走**发现与安装**路径（环境中的 `find-skill`，或 **`npx skills find`** + **`npx skills add`**），再重新匹配。执行前会做**轻量安全检查**；审查通过时，代理会在本仓库根目录的 **`AGENTS.md`** 中追加记录（见该文件）。
+若当前已安装的 skill **没有合适匹配**，会走**发现与安装**路径（环境中的 `find-skill`，或 **`npx skills find`** + **`npx skills add`**），再重新匹配。执行前会做**轻量安全检查**；未通过审查的 skill 不要执行。
 
 完整流程见：[`skills/skill-selector/SKILL.md`](skills/skill-selector/SKILL.md)。
 

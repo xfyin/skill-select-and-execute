@@ -12,7 +12,7 @@ description: >-
 
 # Skill Selector
 
-Selects and runs skills from installed skills based on user input. **Decompose and categorize** the user’s requirements first; **one task may need several skills** (each requirement point can map to its best skill). When multiple skills match a single point, list the top 5 with score and a brief conclusion for the user to choose from, then run the chosen skill(s). If nothing in the catalog fits, **use discovery** (`find-skill` / `npx skills find`) to locate and install a skill, then re-evaluate. **Before relying on a skill**, do a lightweight **security review** and **record the outcome in `AGENTS.md`** when no issues are found (see below).
+Selects and runs skills from installed skills based on user input. **Decompose and categorize** the user’s requirements first; **one task may need several skills** (each requirement point can map to its best skill). When multiple skills match a single point, list the top 5 with score and a brief conclusion for the user to choose from, then run the chosen skill(s). If nothing in the catalog fits, **use discovery** (`find-skill` / `npx skills find`) to locate and install a skill, then re-evaluate. **Before relying on a skill**, do a lightweight **security review** (see **4c**); do not execute if the review fails.
 
 ## Invocation
 
@@ -92,20 +92,18 @@ Apply **Case A / B per requirement point** when the user has multiple points; fo
 - After install, **re-run** categorization and scoring against the updated skill list for the unresolved point(s).
 - If discovery still yields nothing appropriate, suggest manual search on [skills.sh](https://skills.sh) or rephrasing the task.
 
-### 4c. Security Review and AGENTS Log
+### 4c. Security Review
 
 Before **first use** of a skill in this session (especially newly discovered or newly installed skills), do a **lightweight security check**:
 
 - Prefer skills from **known sources**; for GitHub repos, skim README, file list, and obvious scripts for red flags (unexpected network exfiltration, shelling out to risky commands, obfuscated payloads, credential harvesting).
 - If **anything looks unsafe**, do **not** execute that skill; warn the user and suggest removal or audit.
-- If **no security issues** are found (or the skill is already vetted and unchanged), **append one row** to the project’s **`AGENTS.md`** (repo root) under the section **“Skill security review log”**: date (ISO), skill name, source/repo if applicable, reviewer note “no issues found in quick review” (or equivalent). Skip duplicate entries for the same skill version if already logged.
-
-If **`AGENTS.md`** is missing, create it with a short preamble and the log section (see repository template).
+- If **no security issues** are found (or the skill is already vetted and unchanged in this session), proceed with execution. **Do not** create or maintain a separate review log file unless the user or project explicitly requires it.
 
 ## Output Format
 
-- **Single recommendation (one requirement point)**: Short recommendation + reason (1–2 sentences), then **Selected skill: \<name\>**, then run it (after **4c** when executing).
-- **Multiple requirement points**: Short plan: point → skill name → score (or “user to choose”); then **Selected skill(s):** as above for each point, then run in order (after **4c** when executing).
+- **Single recommendation (one requirement point)**: Short recommendation + reason (1–2 sentences), then **Selected skill: \<name\>**, then run it (after **4c** security review when executing).
+- **Multiple requirement points**: Short plan: point → skill name → score (or “user to choose”); then **Selected skill(s):** as above for each point, then run in order (after **4c** for each skill when executing).
 - **Multiple candidates (one point)**: Table or numbered list, each line: **Rank | name | score | one-line conclusion**; then prompt for choice. After choice: **Selected skill: \<name\>**, then run it.
 
 Keep analysis brief; avoid long paragraphs.
@@ -127,4 +125,4 @@ Top 5 matching skills — please choose one (reply with number or skill name):
 - Only choose from the installed/available skill list in the current context (e.g. agent_skills) **unless** you are in the discovery path (step 4b); do not invent skill *names* without a real install source.
 - **Multi-skill tasks** are normal: one skill per requirement point is preferred when domains differ; avoid forcing a single skill to cover unrelated concerns.
 - If no skill fits after categorization, follow **4b** (find-skill / `npx skills find` + install) before giving up.
-- Always complete **4c** when adopting a skill for execution after review, so **`AGENTS.md`** stays an auditable trail of “quick review passed” decisions.
+- Always complete **4c** before executing a skill, especially for newly installed or untrusted sources.
